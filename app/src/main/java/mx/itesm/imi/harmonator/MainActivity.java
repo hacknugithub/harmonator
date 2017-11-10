@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,33 +26,6 @@ import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    private void requestRecordAudioPermission() {
-
-        String requiredPermission = Manifest.permission.RECORD_AUDIO;
-
-        // If the user previously denied this permission then show a message explaining why
-        // this permission is needed
-        if (this.getBaseContext().checkCallingOrSelfPermission(requiredPermission) == PackageManager.PERMISSION_GRANTED) {
-
-        } else {
-
-            Toast.makeText(this.getBaseContext(), "This app needs to record audio through the microphone....", Toast.LENGTH_SHORT).show();
-            requestPermissions(new String[]{requiredPermission}, 101);
-        }
-
-
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-        if (requestCode == 101 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            // This method is called when the  permissions are given
-        }
-
-    }
-
     private PdUiDispatcher dispatcher;
     private void initPD() throws IOException{
         int sampleRate = AudioParameters.suggestSampleRate();
@@ -59,31 +34,38 @@ public class MainActivity extends AppCompatActivity {
         dispatcher = new PdUiDispatcher();
         PdBase.setReceiver(dispatcher);
     }
-    SeekBar seekBar;
-    SeekBar volseekBar;
-    ToggleButton toggleButton;
-
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        requestRecordAudioPermission();
-        seekBar = (SeekBar) findViewById(R.id.seekBar);
-        volseekBar = (SeekBar) findViewById(R.id.seekBar2);
-        toggleButton = (ToggleButton) findViewById(R.id.toggleButton);
+    private void loadPatch() throws IOException{
+        File dir = getFilesDir();
+        IoUtils.extractZipResource(getResources().openRawResource(R.raw.adctest), dir, true);
+        File patchFile = new File(dir, "adctest.pd");
+        PdBase.openPatch(patchFile.getAbsolutePath());
+    }
+    private void startPd() {
 
         try {
             initPD();
-            File dir = getFilesDir();
-            IoUtils.extractZipResource(getResources().openRawResource(R.raw.adctest), dir, true);
-            File patchFile = new File(dir, "adctest.pd");
-            PdBase.openPatch(patchFile.getAbsolutePath());
+            loadPatch();
         } catch (IOException e) {
             e.printStackTrace();
             finish();
         }
 
+    }
+    SeekBar seekBar;
+    SeekBar volseekBar;
+    ToggleButton toggleButton;
+
+//    @RequiresApi(api = Build.VERSION_CODES.M)
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        seekBar = (SeekBar) findViewById(R.id.seekBar);
+        volseekBar = (SeekBar) findViewById(R.id.seekBar2);
+        toggleButton = (ToggleButton) findViewById(R.id.toggleButton);
+
+        requestAudioPermissions();
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -154,5 +136,63 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         PdAudio.stopAudio();
+    }
+
+    //Requesting run-time permissions
+
+    //Create placeholder for user's consent to record_audio permission.
+    //This will be used in handling callback
+    private final int MY_PERMISSIONS_RECORD_AUDIO = 1;
+
+    private void requestAudioPermissions() {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.RECORD_AUDIO)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            //When permission is not granted by user, show them message why this permission is needed.
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.RECORD_AUDIO)) {
+                Toast.makeText(this, "Please grant permissions to record audio", Toast.LENGTH_LONG).show();
+
+                //Give user option to still opt-in the permissions
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.RECORD_AUDIO},
+                        MY_PERMISSIONS_RECORD_AUDIO);
+
+            } else {
+                // Show user dialog to grant permission to record audio
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.RECORD_AUDIO},
+                        MY_PERMISSIONS_RECORD_AUDIO);
+            }
+        }
+        //If permission is granted, then go ahead recording audio
+        else if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.RECORD_AUDIO)
+                == PackageManager.PERMISSION_GRANTED) {
+
+            //Go ahead with recording audio now
+            startPd();
+        }
+    }
+
+    //Handling callback
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_RECORD_AUDIO: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted, yay!
+                    startPd();
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    Toast.makeText(this, "Permissions Denied to record audio", Toast.LENGTH_LONG).show();
+                }
+                return;
+            }
+        }
     }
 }
