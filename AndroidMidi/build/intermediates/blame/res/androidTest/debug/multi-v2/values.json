@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\Users\\hackappo\\Desktop\\Harmonator\\AndroidMidi\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\hackappo\\Desktop\\Harmonator\\AndroidMidi\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,113,185,275,359,449,541,615,697,777,855",
+                        "endColumns": "57,71,89,83,89,91,73,81,79,77,79",
+                        "endOffsets": "108,180,270,354,444,536,610,692,772,850,930"
+                    }
+                }
+            ]
+        }
+    ]
+}

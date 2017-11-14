@@ -13,7 +13,7 @@
         android:label="Tests for com.noisepages.nettoyeur.midi.test"
         android:targetPackage="com.noisepages.nettoyeur.midi.test" />
 
-    <application>
+    <application android:debuggable="true" >
         <uses-library android:name="android.test.runner" />
     </application>
 

@@ -1,0 +1,30 @@
+[
+    {
+        "merged": "C:\\Users\\hackappo\\Desktop\\Harmonator\\PdCore\\build\\intermediates\\res\\merged\\androidTest\\debug\\raw_silence.wav.flat",
+        "source": "C:\\Users\\hackappo\\Desktop\\Harmonator\\PdCore\\build\\intermediates\\bundles\\debug\\res\\raw\\silence.wav"
+    },
+    {
+        "merged": "C:\\Users\\hackappo\\Desktop\\Harmonator\\PdCore\\build\\intermediates\\res\\merged\\androidTest\\debug\\raw_extra_abs.zip.flat",
+        "source": "C:\\Users\\hackappo\\Desktop\\Harmonator\\PdCore\\build\\intermediates\\bundles\\debug\\res\\raw\\extra_abs.zip"
+    },
+    {
+        "merged": "C:\\Users\\hackappo\\Desktop\\Harmonator\\PdCore\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable_din5.png.flat",
+        "source": "C:\\Users\\hackappo\\Desktop\\Harmonator\\AndroidMidi\\build\\intermediates\\bundles\\debug\\res\\drawable\\din5.png"
+    },
+    {
+        "merged": "C:\\Users\\hackappo\\Desktop\\Harmonator\\PdCore\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable_icon.png.flat",
+        "source": "C:\\Users\\hackappo\\Desktop\\Harmonator\\PdCore\\build\\intermediates\\bundles\\debug\\res\\drawable\\icon.png"
+    },
+    {
+        "merged": "C:\\Users\\hackappo\\Desktop\\Harmonator\\PdCore\\build\\intermediates\\res\\merged\\androidTest\\debug\\xml_preferences.xml.flat",
+        "source": "C:\\Users\\hackappo\\Desktop\\Harmonator\\PdCore\\build\\intermediates\\bundles\\debug\\res\\xml\\preferences.xml"
+    },
+    {
+        "merged": "C:\\Users\\hackappo\\Desktop\\Harmonator\\PdCore\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout_device_list.xml.flat",
+        "source": "C:\\Users\\hackappo\\Desktop\\Harmonator\\AndroidMidi\\build\\intermediates\\bundles\\debug\\res\\layout\\device_list.xml"
+    },
+    {
+        "merged": "C:\\Users\\hackappo\\Desktop\\Harmonator\\PdCore\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout_device_name.xml.flat",
+        "source": "C:\\Users\\hackappo\\Desktop\\Harmonator\\AndroidMidi\\build\\intermediates\\bundles\\debug\\res\\layout\\device_name.xml"
+    }
+]
