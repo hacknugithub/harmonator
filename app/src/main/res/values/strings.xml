@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">Harmonator</string>
+    <string-array name="intervalos">
+        <item>2m</item>
+        <item>2M</item>
+        <item>3m</item>
+        <item>3M</item>
+        <item>4</item>
+        <item>4+</item>
+        <item>5J</item>
+        <item>6m</item>
+        <item>6M</item>
+        <item>7m</item>
+        <item>7M</item>
+        <item>8</item>
+    </string-array>
+    <string-array name="inputselect">
+        <item>Tono Puro</item>
+        <item>Sample</item>
+        <item>Microfono</item>
+    </string-array>
 </resources>

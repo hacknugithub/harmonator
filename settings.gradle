@@ -1,1 +1,1 @@
-include ':app', ':AndroidMidi', ':PdCore'
+include ':app', ':AndroidMidi', ':PdCore', ':SeekArc_library'

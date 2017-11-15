@@ -1,4 +1,4 @@
-#N canvas 0 50 1276 647 10;
+#N canvas -8 -8 1280 647 10;
 #X floatatom 78 35 5 0 0 0 - - -, f 5;
 #X obj 71 92 +;
 #X obj 79 10 r intervalo;
@@ -8,11 +8,11 @@
 #X obj 172 69 s intervalo;
 #X obj 255 156 s tono;
 #X obj 172 10 hradio 15 1 1 12 empty empty Intervalos 0 -8 0 10 -262130
--1 -1 4;
+-1 -1 11;
 #X obj 172 28 + 1;
 #X floatatom 172 49 5 0 0 0 - - -, f 5;
 #X obj 258 59 hsl 128 15 25 120 1 0 empty empty Tono_Puro -2 -8 0 10
--203904 -1 -1 7088 1;
+-203904 -1 -1 12700 1;
 #X floatatom 255 79 5 0 0 0 - - -, f 5;
 #X obj 114 34 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
 -1;
@@ -23,23 +23,23 @@
 #X obj 33 253 +~;
 #X obj 56 296 line~;
 #X obj 59 351 hsl 60 15 0.01 1 1 0 empty empty Vol_gral -2 -8 0 10
--4034 -1 -1 2500 1;
+-4034 -1 -1 3100 1;
 #X msg 56 317 \$1 300;
 #X obj 30 296 *~;
 #X obj 31 505 dac~;
 #X obj 103 202 line~;
 #X obj 107 157 hsl 60 15 0.01 1 1 0 empty empty Vol_armon. -2 -8 0
-10 -191407 -1 -1 0 1;
+10 -191407 -1 -1 3200 1;
 #X msg 104 182 \$1 300;
 #X obj 72 224 *~;
 #X obj 100 224 delwrite~ harmdel 500;
 #X obj 108 249 *~ 0.6;
 #X obj 176 157 hsl 60 15 150 2000 0 0 empty empty Delay -2 -8 0 10
--203904 -1 -1 0 1;
+-203904 -1 -1 5900 1;
 #X floatatom 164 177 5 0 0 0 - - -, f 5;
 #X obj 100 279 delread~ harmdel 300;
-#X obj 234 277 hsl 60 15 100 1278.81 0 0 empty del_sld empty -2 -8
-0 10 -262144 -1 -1 0 1;
+#X obj 234 277 hsl 60 15 100 2000 0 0 empty del_sld empty -2 -8 0 10
+-262144 -1 -1 5900 1;
 #X msg 152 244 \; del_sld range 100 \$1;
 #X floatatom 231 297 5 0 0 0 - - -, f 5;
 #X msg 235 223 set \$1;
@@ -159,6 +159,18 @@ la mezcla de los sonidos.;
 #X msg 827 316 0;
 #X msg 410 40 60;
 #X msg 710 38 0;
+#X floatatom 171 -26 5 0 0 0 - - -, f 5;
+#X obj 123 -26 r inter;
+#X obj 108 324 r volgral;
+#X obj 108 119 r volarm;
+#X obj 176 120 r del;
+#X obj 320 35 r tonopuro;
+#X obj 808 37 r inpsel;
+#X obj 137 364 r rev;
+#X obj 243 374 r rlive;
+#X obj 241 422 r rtime;
+#X obj 238 470 r rdamp;
+#X obj 354 226 r playsamp;
 #X connect 0 0 1 1;
 #X connect 1 0 5 0;
 #X connect 2 0 0 0;
@@ -293,3 +305,15 @@ la mezcla de los sonidos.;
 #X connect 126 0 102 0;
 #X connect 127 0 11 0;
 #X connect 128 0 54 0;
+#X connect 129 0 8 0;
+#X connect 130 0 129 0;
+#X connect 131 0 20 0;
+#X connect 132 0 25 0;
+#X connect 133 0 30 0;
+#X connect 134 0 11 0;
+#X connect 135 0 54 0;
+#X connect 136 0 38 0;
+#X connect 137 0 106 0;
+#X connect 138 0 107 0;
+#X connect 139 0 108 0;
+#X connect 140 0 51 0;
