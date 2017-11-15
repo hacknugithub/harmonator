@@ -5,7 +5,7 @@
         <item>2M</item>
         <item>3m</item>
         <item>3M</item>
-        <item>4</item>
+        <item>4J</item>
         <item>4+</item>
         <item>5J</item>
         <item>6m</item>
@@ -18,5 +18,13 @@
         <item>Tono Puro</item>
         <item>Sample</item>
         <item>Microfono</item>
+    </string-array>
+    <string-array name="sonidos">
+        <item>sonido1</item>
+        <item>sonido2</item>
+        <item>sonido3</item>
+        <item>sonido4</item>
+        <item>sonido5</item>
+        <item>sonido6</item>
     </string-array>
 </resources>

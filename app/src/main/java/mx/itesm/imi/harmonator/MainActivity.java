@@ -37,6 +37,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
+
     private PdService pdService = null;
     private PdUiDispatcher dispatcher;
 
@@ -73,25 +74,26 @@ public class MainActivity extends AppCompatActivity {
     private void startPd() {
         bindService(new Intent(this, PdService.class), pdConnection, BIND_AUTO_CREATE);
     }
+
     SeekBar seekBar, volseekBar, seekLive, seekTime, seekDamp;
     ToggleButton toggleButton;
-    Spinner spinnerIntervalo, spinnerInpSel;
+    Spinner spinnerIntervalo, spinnerInpSel, spinnerSonidos;
     SeekArc seekArcVol, seekArcArm;
     CheckBox checkBoxRev;
     Button playSample;
     TextView textV, textA;
 
-//    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+//      Connecting view controllers with code functionality
         seekBar = (SeekBar) findViewById(R.id.seekBarTono);
         volseekBar = (SeekBar) findViewById(R.id.seekBarDelay);
         toggleButton = (ToggleButton) findViewById(R.id.toggleButton);
         spinnerIntervalo = (Spinner) findViewById(R.id.spinnerIntervalos);
         spinnerInpSel = (Spinner) findViewById(R.id.spinnerInpSel);
+        spinnerSonidos = (Spinner) findViewById(R.id.spinnerSounds);
         seekLive = (SeekBar) findViewById(R.id.seekRlive);
         seekTime = (SeekBar) findViewById(R.id.seekRtime);
         seekDamp = (SeekBar) findViewById(R.id.seekRdamp);
@@ -101,12 +103,12 @@ public class MainActivity extends AppCompatActivity {
         playSample = (Button) findViewById(R.id.playSample);
         textA = (TextView) findViewById(R.id.textArm);
         textV = (TextView) findViewById(R.id.textVol);
-//Live permission request
+        //Live permission request
         requestAudioPermissions();
-
+        //Configure the dispatcher as a pd receiver
         dispatcher = new PdUiDispatcher();
         PdBase.setReceiver(dispatcher);
-
+        //Array configuration for display arrays in the spinners
         ArrayAdapter<CharSequence> adapterInt = ArrayAdapter.createFromResource(this,
                 R.array.intervalos, android.R.layout.simple_spinner_item);
         adapterInt.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -116,6 +118,11 @@ public class MainActivity extends AppCompatActivity {
                 R.array.inputselect, android.R.layout.simple_spinner_item);
         adapterSel.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerInpSel.setAdapter(adapterSel);
+
+        ArrayAdapter<CharSequence> adapterSon = ArrayAdapter.createFromResource(this,
+                R.array.sonidos, android.R.layout.simple_spinner_item);
+        adapterSon.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerSonidos.setAdapter(adapterSon);
 
         spinnerIntervalo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -134,6 +141,31 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 PdBase.sendFloat("inpsel", i);
+                if(i==1 || i==2){
+                    seekBar.setEnabled(false);
+                    if(i==2){
+                        playSample.setEnabled(false);
+                        spinnerSonidos.setEnabled(false);
+                    }
+                } else {
+                    seekBar.setEnabled(true);
+                    playSample.setEnabled(true);
+                    spinnerSonidos.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        spinnerSonidos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String son = (String) adapterView.getItemAtPosition(i);
+                Log.v("Adapter view", "value is: "+son);
+                PdBase.sendFloat("soundfile", i);
             }
 
             @Override
@@ -147,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
             public void onProgressChanged(SeekArc seekArc, int progress, boolean fromUser) {
                 float vol = ((float) progress)/100;
                 textV.setText(String.valueOf(vol));
-                PdBase.sendFloat("volarm", vol);
+                PdBase.sendFloat("volgral", vol);
 
             }
 
@@ -167,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
             public void onProgressChanged(SeekArc seekArc, int progress, boolean fromUser) {
                 float armvol = ((float) progress)/100;
                 textA.setText(String.valueOf(armvol));
-                PdBase.sendFloat("volgral", armvol);
+                PdBase.sendFloat("volarm", armvol);
             }
 
             @Override
@@ -295,9 +327,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(b){
-                    PdBase.sendFloat("stmod", 1f);
+                    PdBase.sendFloat("killswitch", 1f);
                 } else {
-                    PdBase.sendFloat("stmod", 0f);
+                    PdBase.sendFloat("killswitch", 0f);
                 }
             }
         });
