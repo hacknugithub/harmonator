@@ -37,15 +37,17 @@ import java.io.File;
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
-
+//    Initialize the pdservice and pddispatcher instances
     private PdService pdService = null;
     private PdUiDispatcher dispatcher;
-
+//    Configure the service and assign a valid binder to the instance of the service
     private final ServiceConnection pdConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+//          Bind the service to avoid null issues
             pdService = ((PdService.PdBinder)iBinder).getService();
             try {
+//              Initialization methods for libpd to start the engine and to read the patch
                 initPD();
                 loadPatch();
             } catch (IOException e) {
@@ -56,15 +58,19 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
-
+//        This will never be executed
         }
     };
-
+//Init method has to throw ioexeption to be inside the try catch block
     private void initPD() throws IOException{
+//      Get the sample rate from the device that hosts the application
         int sampleRate = AudioParameters.suggestSampleRate();
+//        Configure the pdservice with the require parameters: samplerate, input channels, output channels and the time to process audio.
         pdService.initAudio(sampleRate, 1, 2 , 10.0f);
+//        Initialice the service
         pdService.startAudio();
     }
+//    Load patch method also has to throw ioexeption
     private void loadPatch() throws IOException{
         File dir = getFilesDir();
         IoUtils.extractZipResource(getResources().openRawResource(R.raw.pdpatch), dir, true);
@@ -72,9 +78,10 @@ public class MainActivity extends AppCompatActivity {
         PdBase.openPatch(patchFile.getAbsolutePath());
     }
     private void startPd() {
+//        Binds the service to the activity lifecycle
         bindService(new Intent(this, PdService.class), pdConnection, BIND_AUTO_CREATE);
     }
-
+//    Define variables for all types of views
     SeekBar seekBar, volseekBar, seekLive, seekTime, seekDamp;
     ToggleButton toggleButton;
     Spinner spinnerIntervalo, spinnerInpSel, spinnerSonidos;
@@ -87,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//      Connecting view controllers with code functionality
+//      Connecting view controllers with code variables
         seekBar = (SeekBar) findViewById(R.id.seekBarTono);
         volseekBar = (SeekBar) findViewById(R.id.seekBarDelay);
         toggleButton = (ToggleButton) findViewById(R.id.toggleButton);
@@ -123,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                 R.array.sonidos, android.R.layout.simple_spinner_item);
         adapterSon.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerSonidos.setAdapter(adapterSon);
-
+//        Listeners for the spinners functionality
         spinnerIntervalo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -141,16 +148,27 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 PdBase.sendFloat("inpsel", i);
-                if(i==1 || i==2){
-                    seekBar.setEnabled(false);
-                    if(i==2){
+                switch (i){
+                    case 0:
                         playSample.setEnabled(false);
                         spinnerSonidos.setEnabled(false);
-                    }
-                } else {
-                    seekBar.setEnabled(true);
-                    playSample.setEnabled(true);
-                    spinnerSonidos.setEnabled(true);
+                        seekBar.setEnabled(true);
+                        break;
+                    case 1:
+                        playSample.setEnabled(true);
+                        spinnerSonidos.setEnabled(true);
+                        seekBar.setEnabled(false);
+                        break;
+                    case 2:
+                        playSample.setEnabled(false);
+                        spinnerSonidos.setEnabled(false);
+                        seekBar.setEnabled(false);
+                        break;
+                    default:
+                        playSample.setEnabled(false);
+                        spinnerSonidos.setEnabled(false);
+                        seekBar.setEnabled(true);
+                        break;
                 }
             }
 
