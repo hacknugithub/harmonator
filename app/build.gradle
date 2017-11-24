@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId "mx.itesm.imi.harmonator"
-        minSdkVersion 22
+        minSdkVersion 21
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"

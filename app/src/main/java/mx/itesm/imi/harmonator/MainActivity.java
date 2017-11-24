@@ -67,7 +67,8 @@ public class MainActivity extends AppCompatActivity {
     private void initPD() throws IOException{
 //      Get the sample rate from the device that hosts the application
         int sampleRate = AudioParameters.suggestSampleRate();
-//        Configure the pdservice with the require parameters: samplerate, input channels, output channels and the time to process audio.
+//        Configure the pdservice with the require parameters:
+// samplerate, input channels, output channels and the time to process audio.
         pdService.initAudio(sampleRate, 1, 2 , 10.0f);
 //        Initialice the service
         pdService.startAudio();
@@ -84,7 +85,8 @@ public class MainActivity extends AppCompatActivity {
     }
     private void startPd() {
 //        Binds the service to the aplication
-        bindService(new Intent(this, PdService.class), pdConnection, BIND_AUTO_CREATE);
+        bindService(new Intent(this, PdService.class),
+                pdConnection, BIND_AUTO_CREATE);
     }
 //    Define variables for all types of views
     SeekBar seekBar, volseekBar, seekLive, seekTime, seekDamp;

@@ -1,0 +1,43 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\Users\hackappo\Desktop\Harmonator\SeekArc_library\AndroidManifest.xml:24:1-40:12
+INJECTED from C:\Users\hackappo\Desktop\Harmonator\SeekArc_library\AndroidManifest.xml:24:1-40:12
+INJECTED from C:\Users\hackappo\Desktop\Harmonator\SeekArc_library\AndroidManifest.xml:24:1-40:12
+INJECTED from C:\Users\hackappo\Desktop\Harmonator\SeekArc_library\AndroidManifest.xml:24:1-40:12
+INJECTED from C:\Users\hackappo\Desktop\Harmonator\SeekArc_library\AndroidManifest.xml:24:1-40:12
+INJECTED from C:\Users\hackappo\Desktop\Harmonator\SeekArc_library\AndroidManifest.xml:24:1-40:12
+INJECTED from C:\Users\hackappo\Desktop\Harmonator\SeekArc_library\AndroidManifest.xml:24:1-40:12
+	package
+		ADDED from C:\Users\hackappo\Desktop\Harmonator\SeekArc_library\AndroidManifest.xml:25:5-38
+		INJECTED from C:\Users\hackappo\Desktop\Harmonator\SeekArc_library\AndroidManifest.xml
+		INJECTED from C:\Users\hackappo\Desktop\Harmonator\SeekArc_library\AndroidManifest.xml
+	android:versionName
+		ADDED from C:\Users\hackappo\Desktop\Harmonator\SeekArc_library\AndroidManifest.xml:27:5-30
+		INJECTED from C:\Users\hackappo\Desktop\Harmonator\SeekArc_library\AndroidManifest.xml
+		INJECTED from C:\Users\hackappo\Desktop\Harmonator\SeekArc_library\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\Users\hackappo\Desktop\Harmonator\SeekArc_library\AndroidManifest.xml:24:11-69
+	android:versionCode
+		ADDED from C:\Users\hackappo\Desktop\Harmonator\SeekArc_library\AndroidManifest.xml:26:5-28
+		INJECTED from C:\Users\hackappo\Desktop\Harmonator\SeekArc_library\AndroidManifest.xml
+		INJECTED from C:\Users\hackappo\Desktop\Harmonator\SeekArc_library\AndroidManifest.xml
+uses-sdk
+ADDED from C:\Users\hackappo\Desktop\Harmonator\SeekArc_library\AndroidManifest.xml:29:5-31:41
+INJECTED from C:\Users\hackappo\Desktop\Harmonator\SeekArc_library\AndroidManifest.xml:29:5-31:41
+INJECTED from C:\Users\hackappo\Desktop\Harmonator\SeekArc_library\AndroidManifest.xml:29:5-31:41
+INJECTED from C:\Users\hackappo\Desktop\Harmonator\SeekArc_library\AndroidManifest.xml:29:5-31:41
+INJECTED from C:\Users\hackappo\Desktop\Harmonator\SeekArc_library\AndroidManifest.xml:29:5-31:41
+	android:targetSdkVersion
+		ADDED from C:\Users\hackappo\Desktop\Harmonator\SeekArc_library\AndroidManifest.xml:31:9-38
+		INJECTED from C:\Users\hackappo\Desktop\Harmonator\SeekArc_library\AndroidManifest.xml
+		INJECTED from C:\Users\hackappo\Desktop\Harmonator\SeekArc_library\AndroidManifest.xml
+	android:minSdkVersion
+		ADDED from C:\Users\hackappo\Desktop\Harmonator\SeekArc_library\AndroidManifest.xml:30:9-34
+		INJECTED from C:\Users\hackappo\Desktop\Harmonator\SeekArc_library\AndroidManifest.xml
+		INJECTED from C:\Users\hackappo\Desktop\Harmonator\SeekArc_library\AndroidManifest.xml
+application
+ADDED from C:\Users\hackappo\Desktop\Harmonator\SeekArc_library\AndroidManifest.xml:33:5-38:19
+	android:label
+		ADDED from C:\Users\hackappo\Desktop\Harmonator\SeekArc_library\AndroidManifest.xml:36:9-41
+	android:allowBackup
+		ADDED from C:\Users\hackappo\Desktop\Harmonator\SeekArc_library\AndroidManifest.xml:34:9-35
