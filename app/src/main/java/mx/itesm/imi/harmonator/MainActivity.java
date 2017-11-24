@@ -5,6 +5,7 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
+
 import android.os.IBinder;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -37,6 +38,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
+
 //    Initialize the pdservice and pddispatcher instances
     private PdService pdService = null;
     private PdUiDispatcher dispatcher;
@@ -73,28 +75,33 @@ public class MainActivity extends AppCompatActivity {
 //    Load patch method also has to throw ioexeption
     private void loadPatch() throws IOException{
         File dir = getFilesDir();
+//        Get the patch form inside de .zip file
         IoUtils.extractZipResource(getResources().openRawResource(R.raw.pdpatch), dir, true);
+//        Locate the file to open within the .zip
         File patchFile = new File(dir, "harmonatorv1.pd");
+//        Open the patch
         PdBase.openPatch(patchFile.getAbsolutePath());
     }
     private void startPd() {
-//        Binds the service to the activity lifecycle
+//        Binds the service to the aplication
         bindService(new Intent(this, PdService.class), pdConnection, BIND_AUTO_CREATE);
     }
 //    Define variables for all types of views
     SeekBar seekBar, volseekBar, seekLive, seekTime, seekDamp;
     ToggleButton toggleButton;
     Spinner spinnerIntervalo, spinnerInpSel, spinnerSonidos;
+//    Special type of view from seekarc library
     SeekArc seekArcVol, seekArcArm;
     CheckBox checkBoxRev;
     Button playSample;
     TextView textV, textA;
-
+//This method get's called when the aplication is loaded
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//      Connecting view controllers with code variables
+
+//      Connecting view controllers with activity classes
         seekBar = (SeekBar) findViewById(R.id.seekBarTono);
         volseekBar = (SeekBar) findViewById(R.id.seekBarDelay);
         toggleButton = (ToggleButton) findViewById(R.id.toggleButton);
@@ -111,11 +118,12 @@ public class MainActivity extends AppCompatActivity {
         textA = (TextView) findViewById(R.id.textArm);
         textV = (TextView) findViewById(R.id.textVol);
         //Live permission request
-        requestAudioPermissions();
+        requestAudioPermissions ();
         //Configure the dispatcher as a pd receiver
+//        Dispatchers let us retrieve data from the patch, not necesary for this one though
         dispatcher = new PdUiDispatcher();
         PdBase.setReceiver(dispatcher);
-        //Array configuration for display arrays in the spinners
+        //Array configuration for display arrays in the three spinners
         ArrayAdapter<CharSequence> adapterInt = ArrayAdapter.createFromResource(this,
                 R.array.intervalos, android.R.layout.simple_spinner_item);
         adapterInt.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -134,7 +142,9 @@ public class MainActivity extends AppCompatActivity {
         spinnerIntervalo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                Logs the index number for the option selected
                 Log.v("Item Selected", "index: "+i);
+//                Sends the value of the option selected to pure data patch
                 PdBase.sendFloat("inter", i);
             }
 
@@ -143,11 +153,13 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
+//Listener for the input selection
         spinnerInpSel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                Sends the item selected to pd
                 PdBase.sendFloat("inpsel", i);
+//                Activates controls only when needed depending on the input selection
                 switch (i){
                     case 0:
                         playSample.setEnabled(false);
@@ -252,7 +264,7 @@ public class MainActivity extends AppCompatActivity {
         volseekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-
+//                Restricts the value for the delay amount
                 int del = i;
                 if(del < 150){
                     del = 150;
@@ -359,6 +371,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
+//        When destroyed unbinds the service from the system
         unbindService(pdConnection);
     }
 
